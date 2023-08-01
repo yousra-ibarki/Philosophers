@@ -13,6 +13,7 @@ typedef struct s_philo
     int id_philo;
     int rfork;
     int lfork;
+    t_info *action;
     struct s_info *info;
 } t_philo;
 
@@ -24,6 +25,7 @@ typedef struct s_info
     int time_eat;
     int time_sleep;
     int nbr_philo_must_eat;
+    int start;
 } t_info;
 
 #endif

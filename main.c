@@ -41,9 +41,14 @@ int ft_atoi(const char *str)
     return (out * sign);
 }
 
-
 void *ft_routine(void *arg)
 {
+}
+
+
+void ft_threads(t_info *philo)
+{
+    int i = 0;
     
 }
 
@@ -64,26 +69,33 @@ int main(int ac, char **av)
         if (ac == 6)
             philo.nbr_philo_must_eat = ft_atoi(av[5]);
         forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * philo.nbr_philo_must_eat);
-        if(!forks)
+        if (!forks)
             return NULL;
-        
-        while(i < philo.nbr_philo)
+
+        while (i < philo.nbr_philo)
         {
-            if(pthread_mutex_init(&(forks[i]), NULL) != 0);
+            if (pthread_mutex_init(&(forks[i]), NULL) != 0)
                 return NULL;
             i++;
         }
         
+        philo.philosopher = malloc(sizeof(t_info) * philo.nbr_philo);
+        if(!philo.philosopher)
+            return NULL;
         philo.philosopher[0].id_philo = 1;
-        philo.philosopher[0].lfork = &(fork);//contionue
+        philo.philosopher[0].lfork = &(forks[philo.nbr_philo - 1]);
+        philo.philosopher[0].rfork = &(forks[philo.nbr_philo + 1]);
 
         i = 2;
-        while(i < philo.nbr_philo)
+        while (i < philo.nbr_philo)
         {
             philo.philosopher[i].id_philo = i;
+            philo.philosopher[i].lfork = &(forks[i - 1]);
+            philo.philosopher[i].rfork = &(forks[i + 1]);
             i++;
         }
-
+            //begin threading
+        ft_threads(&philo);
         while (i < philo.nbr_philo)
         {
             resofcreat = pthread_create(&threads, NULL, ft_routine, &);
