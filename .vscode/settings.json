@@ -57,6 +57,7 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "files.associations": {
     "limits.h": "c",
-    "philosopher.h": "c"
+    "philosopher.h": "c",
+    "sstream": "c"
   }
 }
