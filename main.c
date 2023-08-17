@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
+/*   Updated: 2023/08/17 12:08:14 by yoibarki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosopher.h"
 
 void	*ft_routine(void *philo)
@@ -28,31 +40,33 @@ void	*ft_routine(void *philo)
 	return (0);
 }
 
-int ft_check_arg(int ac, char **av, t_shared_info *info)
+int	ft_check_arg(int ac, char **av, t_shared_info *info)
 {
-	int i = 1;
-	int j;
-	while(av[i])
+	int	i;
+	int	j;
+
+	i = 1;
+	while (av[i])
 	{
 		j = 0;
-		while(av[i][j])
+		while (av[i][j])
 		{
-			if(av[i][j] >= '0' && av[i][j] <= '9')
+			if (av[i][j] >= '0' && av[i][j] <= '9')
 				j++;
 			else
- 				return 1;
+				return (1);
 		}
 		i++;
 	}
 	info->start_time = get_time();
-		info->nbr_philo = ft_atoi(av[1]);
-		info->time_die = ft_atoi(av[2]);
-		info->time_eat = ft_atoi(av[3]);
-		info->time_sleep = ft_atoi(av[4]);
-		info->nbr_philo_must_eat = -1;
-		if (ac == 6)
-			info->nbr_philo_must_eat = ft_atoi(av[5]);
-		return 0;
+	info->nbr_philo = ft_atoi(av[1]);
+	info->time_die = ft_atoi(av[2]);
+	info->time_eat = ft_atoi(av[3]);
+	info->time_sleep = ft_atoi(av[4]);
+	info->nbr_philo_must_eat = -1;
+	if (ac == 6)
+		info->nbr_philo_must_eat = ft_atoi(av[5]);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -63,60 +77,22 @@ int	main(int ac, char **av)
 	int				j;
 
 	j = 0;
-	i = -1;
 	if (ac == 5 || ac == 6)
 	{
-		if(ft_check_arg(ac, av, &info) == 1)
-			return 0;
-		//pthread_mutex_init
-
-		if (pthread_mutex_init(&(info.lock_print), NULL) != 0)
+		if (ft_check_arg(ac, av, &info) == 1)
 			return (0);
 		philo = malloc(sizeof(t_philo) * info.nbr_philo);
 		if (!philo)
 			return (0);
-		while (++i < info.nbr_philo)
-		{
-			if (pthread_mutex_init(&(philo[i].fork), NULL) != 0)
-				return (0);
-			philo[i].id_philo = i + 1;
-			philo[i].info = info;
-		}
-
-		//pthread_create5
-
+		if (ft_mutex(philo, info) == 0)
+			return (0);
+		ft_get_next_fork(philo, info);
 		i = -1;
 		while (++i < info.nbr_philo)
-		{
-			philo[i].next_fork = &(philo[i + 1].fork);
-			philo[i].end_eating = get_time();
-		}
-		i = -1;
-		while (++i < info.nbr_philo)
-		{
 			pthread_create(&philo[i].threads_id, NULL, ft_routine, &philo[i]);
-		}
-			philo[i].info.flag = 0;
-		while (1)
-		{
-			i = -1;
-			while (++i < info.nbr_philo) 
-			{
-				if (philo[i].info.nbr_philo_must_eat == philo[i].nbr_of_meals && philo[i].info.flag == 0)
-				{
-					philo[i].info.flag = 1;
-					j++;
-					if (j == info.nbr_philo)
-						return (0);
-				}
-
-				if ((get_time() - philo[i].end_eating) >= (unsigned long)philo[i].info.time_die)
-				{
-					ft_printf("died", &philo[i]);
-					return (0);
-				}
-			}
-		}
+		philo[i].info.flag = 0;
+		if (ft_check(info, philo) == 0)
+			return (0);
 	}
 	else
 		return (0);
