@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:39 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/17 12:11:41 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:15:49 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_get_next_fork(t_philo *philo, t_shared_info info)
 	i = -1;
 	while (++i < info.nbr_philo)
 	{
+		if (i == info.nbr_philo)
+			info.nbr_philo = 0;
 		philo[i].next_fork = &(philo[i + 1].fork);
 		philo[i].end_eating = get_time();
 	}

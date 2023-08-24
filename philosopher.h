@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:10:19 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/17 12:10:24 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/18 15:07:09 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_shared_info
 {
 	pthread_mutex_t	lock_print;
 	int				nbr_philo;
-	int				flag;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
@@ -35,6 +34,7 @@ typedef struct s_philo
 {
 	int				id_philo;
 	pthread_t		threads_id;
+	int				flag;
 	pthread_mutex_t	fork;
 	pthread_mutex_t	*next_fork;
 	int				nbr_of_meals;
@@ -50,5 +50,6 @@ void				ft_printf(const char *str, t_philo *ptr);
 int					ft_check(t_shared_info info, t_philo *philo);
 int					ft_mutex(t_philo *philo, t_shared_info info);
 void				ft_get_next_fork(t_philo *philo, t_shared_info info);
+int	ft_check_int(char **av);
 
 #endif

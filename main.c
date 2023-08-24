@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/17 12:08:14 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:20:53 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,28 @@ void	*ft_routine(void *philo)
 
 int	ft_check_arg(int ac, char **av, t_shared_info *info)
 {
-	int	i;
-	int	j;
+	// int	i;
+	// int	j;
 
-	i = 1;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] >= '0' && av[i][j] <= '9')
-				j++;
-			else
-				return (1);
-		}
-		i++;
-	}
+	if(ft_check_int(av) == 1)
+		return 1;
+	// i = 1;
+	// while (av[i])
+	// {
+	// 	j = 0;
+	// 	while (av[i][j])
+	// 	{
+	// 		if (av[i][j] >= '0' && av[i][j] <= '9')
+	// 			j++;
+	// 		else
+	// 			return (1);
+	// 	}
+	// 	i++;
+	// }
 	info->start_time = get_time();
 	info->nbr_philo = ft_atoi(av[1]);
+	if (info->nbr_philo == 1)
+		return (0);
 	info->time_die = ft_atoi(av[2]);
 	info->time_eat = ft_atoi(av[3]);
 	info->time_sleep = ft_atoi(av[4]);
@@ -90,9 +94,10 @@ int	main(int ac, char **av)
 		i = -1;
 		while (++i < info.nbr_philo)
 			pthread_create(&philo[i].threads_id, NULL, ft_routine, &philo[i]);
-		philo[i].info.flag = 0;
+		philo[i].flag = 0;
 		if (ft_check(info, philo) == 0)
 			return (0);
+		//pthread_mutex_destroy();
 	}
 	else
 		return (0);

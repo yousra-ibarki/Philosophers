@@ -6,7 +6,7 @@
 #    By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/17 12:10:29 by yoibarki          #+#    #+#              #
-#    Updated: 2023/08/17 12:10:31 by yoibarki         ###   ########.fr        #
+#    Updated: 2023/08/24 12:13:51 by yoibarki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
 all: $(NAME)
 
