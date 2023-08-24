@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/24 12:20:53 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:24:58 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ int	main(int ac, char **av)
 		philo[i].flag = 0;
 		if (ft_check(info, philo) == 0)
 			return (0);
-		//pthread_mutex_destroy();
+		int i = -1;
+		while(++i < info.nbr_philo)
+			pthread_mutex_destroy(&philo[i]);
 	}
 	else
 		return (0);
