@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 17:25:43 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:28:19 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	*ft_routine(void *philo)
 		pthread_mutex_lock(ptr->next_fork);
 		ft_printf("has taken a fork", ptr);
 		ft_printf("is eating", ptr);
-		ft_usleep(ptr->info.time_eat);
-		pthread_mutex_lock(&(ptr->info.protect_end_eating));
+		ft_usleep(ptr->info->time_eat);
+		pthread_mutex_lock(&(ptr->info->protect_end_eating));
 		ptr->end_eating = get_time();
-		pthread_mutex_unlock(&(ptr->info.protect_end_eating));
+		pthread_mutex_unlock(&(ptr->info->protect_end_eating));
 		pthread_mutex_unlock(&(ptr->fork));
 		pthread_mutex_unlock(ptr->next_fork);
 		ft_printf("is sleeping", ptr);
-		ft_usleep(ptr->info.time_sleep);
+		ft_usleep(ptr->info->time_sleep);
 		ft_printf("is thinking", ptr);
 	}
 	return (0);
@@ -43,8 +43,8 @@ void	*ft_routine(void *philo)
 
 int	ft_check_arg(int ac, char **av, t_shared_info *info)
 {
-	if (ft_check_int(av) == 1)
-		return (1);
+	if (ft_check_int(av) == 0)
+		return (0);
 	info->start_time = get_time();
 	info->nbr_philo = ft_atoi(av[1]);
 	info->time_die = ft_atoi(av[2]);
@@ -53,15 +53,15 @@ int	ft_check_arg(int ac, char **av, t_shared_info *info)
 	info->nbr_philo_must_eat = -1;
 	if (ac == 6)
 		info->nbr_philo_must_eat = ft_atoi(av[5]);
-	return (0);
+	return (1);
 }
 
-void	ft_thread_creat(t_shared_info info, t_philo *philo)
+void	ft_thread_creat(t_shared_info *info, t_philo *philo)
 {
 	int	i;
 
 	i = -1;
-	while (++i < info.nbr_philo)
+	while (++i < info->nbr_philo)
 	{
 		pthread_create(&philo[i].threads_id, NULL, ft_routine, &philo[i]);
 		philo[i].flag = 0;
@@ -71,20 +71,23 @@ void	ft_thread_creat(t_shared_info info, t_philo *philo)
 int	main(int ac, char **av)
 {
 	t_philo			*philo;
-	t_shared_info	info;
+	t_shared_info	*info;
 
 	if (ac == 5 || ac == 6)
 	{
-		if (ft_check_arg(ac, av, &info) == 1 || info.nbr_philo == 0)
+		info = malloc(sizeof(t_shared_info));
+		if (!info)
 			return (0);
-		philo = malloc(sizeof(t_philo) * info.nbr_philo);
+		if (ft_check_arg(ac, av, info) == 0 || info->nbr_philo == 0)
+			return (0);
+		philo = malloc(sizeof(t_philo) * info->nbr_philo);
 		if (!philo)
 			return (0);
 		if (ft_mutex(philo, info) == 0)
 			return (free(philo), 0);
 		ft_get_next_fork(philo, info);
 		ft_thread_creat(info, philo);
-		if (ft_check(info, philo) == 0)
+		if (ft_check_death(info, philo) == 0 || ft_check_meal(info, philo) == 0)
 			return (0);
 	}
 	else

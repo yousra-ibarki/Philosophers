@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:10:19 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 17:28:41 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:15:45 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_philo
 {
 	pthread_mutex_t	fork;
 	pthread_mutex_t	*next_fork;
-	t_shared_info	info;
+	t_shared_info	*info;
 	unsigned long	end_eating;
 	pthread_t		threads_id;
 	int				id_philo;
@@ -48,11 +48,12 @@ typedef struct s_philo
 
 unsigned long		get_time(void);
 int					ft_atoi(const char *str);
-int					ft_check(t_shared_info info, t_philo *philo);
-int					ft_mutex(t_philo *philo, t_shared_info info);
+int					ft_check_meal(t_shared_info *info, t_philo *philo);
+int					ft_check_death(t_shared_info *info, t_philo *philo);
+int					ft_mutex(t_philo *philo, t_shared_info *info);
 int					ft_check_int(char **av);
 void				ft_usleep(int nbr);
 void				ft_printf(char *str, t_philo *ptr);
-void				ft_get_next_fork(t_philo *philo, t_shared_info info);
+void				ft_get_next_fork(t_philo *philo, t_shared_info *info);
 
 #endif

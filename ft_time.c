@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:56 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 17:27:43 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:43:38 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ void	ft_printf(char *str, t_philo *ptr)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&(ptr->info.lock_print));
-	printf("%lu %d %s\n", (get_time() - ptr->info.start_time), 
+	pthread_mutex_lock(&(ptr->info->lock_print));
+	printf("%lu %d %s\n", (get_time() - ptr->info->start_time), 
 		ptr->id_philo, str);
 	if (ft_strcmp(str, "died") != 0)
-		pthread_mutex_unlock(&(ptr->info.lock_print));
+		pthread_mutex_unlock(&(ptr->info->lock_print));
 	if (ft_strcmp(str, "is eating") == 0)
 	{
-		pthread_mutex_lock(&(ptr->info.protect_nbr_meals));
+		pthread_mutex_lock(&(ptr->info->protect_nbr_meals));
 		ptr->nbr_of_meals++;
-		pthread_mutex_unlock(&(ptr->info.protect_nbr_meals));
+		pthread_mutex_unlock(&(ptr->info->protect_nbr_meals));
 	}
 }

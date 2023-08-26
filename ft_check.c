@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:13 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 17:27:07 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:28:06 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,64 +24,56 @@ int	ft_check_int(char **av)
 		while (av[i][j])
 		{
 			if (av[i][j] < '0' || av[i][j] > '9')
-				return (1);
+				return (0);
 			j++;
 		}
 		i++;
 	}
-	return (0);
-}
-
-int	ft_check_meals(t_shared_info info, t_philo *philo)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	if (info.nbr_philo != 1)
-	{
-		while (1)
-		{
-			i = -1;
-			while (++i < info.nbr_philo)
-			{
-				pthread_mutex_lock(&(info.protect_nbr_meals));
-				if (philo[i].info.nbr_philo_must_eat == philo[i].nbr_of_meals
-					&& philo[i].flag == 0)
-				{
-					philo[i].flag = 1;
-					j++;
-					if (j == info.nbr_philo)
-						return (0);
-				}
-				pthread_mutex_unlock(&(info.protect_nbr_meals));
-			}
-		}
-	}
 	return (1);
 }
 
-int	ft_check(t_shared_info info, t_philo *philo)
+int	ft_check_meal(t_shared_info *info, t_philo *philo)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	if (ft_check_meals(info, philo) == 0)
-		return (0);
 	while (1)
 	{
 		i = -1;
-		while (++i < info.nbr_philo)
+		while (++i < info->nbr_philo)
 		{
-			pthread_mutex_lock(&(info.protect_end_eating));
-			if ((get_time() - philo[i].end_eating)
-				>= (unsigned long)philo[i].info.time_die)
+			pthread_mutex_lock(&(info->protect_nbr_meals));
+			if (philo[i].info->nbr_philo_must_eat == philo[i].nbr_of_meals
+				&& philo[i].flag == 0)
+			{
+				philo[i].flag = 1;
+				j++;
+				if (j == info->nbr_philo)
+					return (0);
+			}
+			pthread_mutex_unlock(&(info->protect_nbr_meals));
+		}
+	}
+}
+
+int	ft_check_death(t_shared_info *info, t_philo *philo)
+{
+	int	i;
+
+	while (1)
+	{
+		i = -1;
+		while (++i < info->nbr_philo)
+		{
+			pthread_mutex_lock(&(info->protect_end_eating));
+			if ((get_time() - philo[i].end_eating) 
+				>= (unsigned long)philo[i].info->time_die)
 			{
 				ft_printf("died", &philo[i]);
 				return (0);
 			}
-			pthread_mutex_unlock(&(info.protect_end_eating));
+			pthread_mutex_unlock(&(info->protect_end_eating));
 		}
 	}
 }
