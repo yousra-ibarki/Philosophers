@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:56 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/17 14:00:43 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:27:43 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ void	ft_usleep(int nbr)
 	}
 }
 
-void	ft_printf(const char *str, t_philo *ptr)
+static int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+void	ft_printf(char *str, t_philo *ptr)
 {
 	int	i;
 
@@ -39,6 +49,12 @@ void	ft_printf(const char *str, t_philo *ptr)
 	pthread_mutex_lock(&(ptr->info.lock_print));
 	printf("%lu %d %s\n", (get_time() - ptr->info.start_time), 
 		ptr->id_philo, str);
-	if (str[0] != 'd')
+	if (ft_strcmp(str, "died") != 0)
 		pthread_mutex_unlock(&(ptr->info.lock_print));
+	if (ft_strcmp(str, "is eating") == 0)
+	{
+		pthread_mutex_lock(&(ptr->info.protect_nbr_meals));
+		ptr->nbr_of_meals++;
+		pthread_mutex_unlock(&(ptr->info.protect_nbr_meals));
+	}
 }

@@ -58,6 +58,7 @@
   "files.associations": {
     "limits.h": "c",
     "philosopher.h": "c",
-    "sstream": "c"
+    "sstream": "c",
+    "stdlib.h": "c"
   }
 }
