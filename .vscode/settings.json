@@ -54,11 +54,5 @@
   "C_Cpp_Runner.useUndefinedSanitizer": false,
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
-  "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "files.associations": {
-    "limits.h": "c",
-    "philosopher.h": "c",
-    "sstream": "c",
-    "stdlib.h": "c"
-  }
+  "C_Cpp_Runner.useLinkTimeOptimization": false
 }

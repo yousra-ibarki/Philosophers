@@ -11,8 +11,7 @@
       "intelliSenseMode": "macos-clang-x64",
       "compilerArgs": [
         ""
-      ],
-      "configurationProvider": "ms-vscode.makefile-tools"
+      ]
     }
   ],
   "version": 4
