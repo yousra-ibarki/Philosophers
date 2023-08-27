@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/27 17:35:13 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:27:35 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	main(int ac, char **av)
 			ft_destroy_mutex(philo, info);
 			return (ft_free(info, philo), 0);
 		}
+
+
 	}
 	else
 		return (0);
