@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 23:28:19 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:27:35 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ void	ft_thread_creat(t_shared_info *info, t_philo *philo)
 	}
 }
 
+void	ft_free(t_shared_info *info, t_philo *philo)
+{
+	if (info)
+		free(info);
+	if (philo)
+		free(philo);
+}
+
 int	main(int ac, char **av)
 {
 	t_philo			*philo;
@@ -79,16 +87,19 @@ int	main(int ac, char **av)
 		if (!info)
 			return (0);
 		if (ft_check_arg(ac, av, info) == 0 || info->nbr_philo == 0)
-			return (0);
+			return (ft_free(info, NULL), 0);
 		philo = malloc(sizeof(t_philo) * info->nbr_philo);
 		if (!philo)
 			return (0);
 		if (ft_mutex(philo, info) == 0)
-			return (free(philo), 0);
+			return (ft_free(info, philo), 0);
 		ft_get_next_fork(philo, info);
 		ft_thread_creat(info, philo);
 		if (ft_check_death(info, philo) == 0 || ft_check_meal(info, philo) == 0)
-			return (0);
+		{
+			ft_destroy_mutex(philo, info);
+			return (ft_free(info, philo), 0);
+		}
 	}
 	else
 		return (0);

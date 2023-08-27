@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:10:19 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 23:15:45 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:18:08 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ int					ft_check_int(char **av);
 void				ft_usleep(int nbr);
 void				ft_printf(char *str, t_philo *ptr);
 void				ft_get_next_fork(t_philo *philo, t_shared_info *info);
+int					ft_destroy_mutex(t_philo *philo, t_shared_info *info);
 
 #endif

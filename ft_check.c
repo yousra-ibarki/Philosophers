@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:13 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 23:28:06 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:27:15 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,27 @@ int	ft_check_meal(t_shared_info *info, t_philo *philo)
 	int	j;
 
 	j = 0;
-	while (1)
+	if (info->nbr_philo_must_eat != -1)
 	{
-		i = -1;
-		while (++i < info->nbr_philo)
+		while (1)
 		{
-			pthread_mutex_lock(&(info->protect_nbr_meals));
-			if (philo[i].info->nbr_philo_must_eat == philo[i].nbr_of_meals
-				&& philo[i].flag == 0)
+			i = -1;
+			while (++i < info->nbr_philo)
 			{
-				philo[i].flag = 1;
-				j++;
-				if (j == info->nbr_philo)
-					return (0);
+				pthread_mutex_lock(&(info->protect_nbr_meals));
+				if (philo[i].info->nbr_philo_must_eat == philo[i].nbr_of_meals
+					&& philo[i].flag == 0)
+				{
+					philo[i].flag = 1;
+					j++;
+					if (j == info->nbr_philo)
+						return (0);
+				}
+				pthread_mutex_unlock(&(info->protect_nbr_meals));
 			}
-			pthread_mutex_unlock(&(info->protect_nbr_meals));
 		}
 	}
+	return (1);
 }
 
 int	ft_check_death(t_shared_info *info, t_philo *philo)

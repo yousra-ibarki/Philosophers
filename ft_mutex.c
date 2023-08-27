@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:39 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/26 22:40:22 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:28:03 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,31 @@ int	ft_mutex(t_philo *philo, t_shared_info *info)
 		return (0);
 	if (pthread_mutex_init(&(info->protect_end_eating), NULL) != 0)
 		return (0);
-	if (pthread_mutex_init(&(info->lock_flag), NULL) != 0)
-		return (0);
 	while (++i < info->nbr_philo)
 	{
 		if (pthread_mutex_init(&(philo[i].fork), NULL) != 0)
 			return (0);
 		philo[i].id_philo = i + 1;
 		philo[i].info = info;
+	}
+	return (1);
+}
+
+int	ft_destroy_mutex(t_philo *philo, t_shared_info *info)
+{
+	int	i;
+
+	i = -1;
+	if (pthread_mutex_destroy(&(info->lock_print)) != 0)
+		return (0);
+	if (pthread_mutex_destroy(&(info->protect_nbr_meals)) != 0)
+		return (0);
+	if (pthread_mutex_destroy(&(info->protect_end_eating)) != 0)
+		return (0);
+	while (++i < info->nbr_philo)
+	{
+		if (pthread_mutex_destroy(&philo[i].fork) != 0)
+			return (0);
 	}
 	return (1);
 }
