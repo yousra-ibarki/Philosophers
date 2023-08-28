@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/yoibarki/Desktop/new_phil",
-      "program": "/Users/yoibarki/Desktop/new_phil/build/Debug/outDebug"
+      "cwd": "/Users/yoibarki/Desktop/edit_philo",
+      "program": "/Users/yoibarki/Desktop/edit_philo/build/Debug/outDebug"
     }
   ]
 }
