@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/28 10:54:11 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:49:49 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ int	ft_check_arg(int ac, char **av, t_shared_info *info)
 	info->time_sleep = ft_atoi(av[4]);
 	info->nbr_philo_must_eat = -1;
 	if (ac == 6)
+	{
 		info->nbr_philo_must_eat = ft_atoi(av[5]);
+		if (info->nbr_philo_must_eat == 0)
+			return (0);
+	}
 	return (1);
 }
 
