@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:10:19 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/27 23:40:58 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:18:23 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_shared_info
 {

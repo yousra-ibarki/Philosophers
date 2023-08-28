@@ -6,21 +6,16 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:47 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/17 12:08:57 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:19:26 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-static int	checkoverflow(unsigned long long out, int sign)
+static int	checkoverflow(unsigned long long out)
 {
-	if (out > 2146218951891489519)
-	{
-		if (sign == -1)
-			return (0);
-		else
-			return (-1);
-	}
+	if (out > INT_MAX)
+		return (0);
 	return (1);
 }
 
@@ -45,10 +40,8 @@ int	ft_atoi(const char *str)
 	{
 		out *= 10;
 		out += str[i++] - '0';
-		if (checkoverflow(out, sign) == 0)
+		if (checkoverflow(out) == 0)
 			return (0);
-		else if (checkoverflow(out, sign) == -1)
-			return (-1);
 	}
 	return (out * sign);
 }

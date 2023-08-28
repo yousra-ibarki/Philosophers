@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:08:09 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/28 11:49:49 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:09:25 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int ac, char **av)
 			return (ft_free(info, NULL), 0);
 		philo = malloc(sizeof(t_philo) * info->nbr_philo);
 		if (!philo)
-			return (0);
+			return (ft_free(info, NULL), 0);
 		if (ft_mutex(philo, info) == 0)
 			return (ft_free(info, philo), 0);
 		ft_get_next_fork(philo, info);

@@ -6,7 +6,7 @@
 /*   By: yoibarki <yoibarki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 12:09:13 by yoibarki          #+#    #+#             */
-/*   Updated: 2023/08/27 23:41:27 by yoibarki         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:21:41 by yoibarki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ int	ft_check_int(char **av)
 	while (av[i])
 	{
 		j = 0;
+		if (av[i][0] == '\0')
+			return (0);
 		while (av[i][j])
 		{
 			if (av[i][j] < '0' || av[i][j] > '9')
 				return (0);
 			j++;
 		}
+		if (ft_atoi(av[i]) == 0)
+			return (0);
 		i++;
 	}
 	return (1);
